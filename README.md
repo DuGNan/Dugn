@@ -1,8 +1,9 @@
 # Dugn
-杜广楠的仓库
-xrb join in 2020-04-04 
+用于整理学习代码、面试题。 <br>
+owner : 杜广楠  <br>
+contributors:  <br>
+ xrb join in 2020-04-04  <br>
 
-本仓库用于整理面试题 <br>
 
 ## Java <br>
 1、基础 <br>
