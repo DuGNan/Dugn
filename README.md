@@ -6,7 +6,6 @@ contributors:  <br>
 
 
 ## Java <br>
-1、基础 <br>
-2、JUC <br>
-3、JVM <br>
-4、数据容器 <br>
+/Java/1-java.md 基础<br>
+/Java/2-juc.md 多线程<br>
+/Java/3-jvm.md Java虚拟机<br>
