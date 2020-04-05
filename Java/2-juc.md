@@ -10,11 +10,124 @@ A: 在Java中，根据JMM内存模型，导致线程不安全的原因有三个�
     2、原子性:当一个线程对共享数据操作到一半的时候，刚好CPU切换到其他线程也来操作共享变量，干扰了前一个线程的操作。<br>
     3、有序性:由于Java的编译器在生成字节码文件的时候会对字节码指令进行排序。另外CPU也会对交给它处理的机器指令进行排序优化提升效率，这两种指令的重新排序都会造成数据的安全性问题。<br>
     
-
-
 ## 二、线程、线程池
+Q:有几种获得线程的方式？<br>
+A：常用的是四种。继承Thread类，实现Runnable接口，实现Callable获得一个可以带返回值的线程，还有就是使用线程池。<br>
+一般在实际开发中要使用线程池。好处就是能够控制最大并发数，线程复用，方便管理线程。<br>
+<br><br><br>
+
+Q:JDK自带的线程池有哪些？能说一下么？<br>
+A:JDK能够借助Executors创建4种线程池。<br>
+1、Executors.newFixedThreadPool(5) 创建一个固定数目的线程池。<br>
+2、Executors.newSingleThreadPool() 创建一个只有一个线程的线程池。<br>
+3、Executors.newCachesThreadPool() 创建一个能随机扩容的线程池 在没有线程可用的时候会创建 也会清除那些60s没有使用的线程。<br>
+4、Executors.newScheduledThreadPool() 创建一个能延迟执行或者定时执行的线程池。<br>
+<br><br><br>
+
+
+Q:平时工作中用使用上面哪一种方式创建线程池？<br>
+A:一般都不用。这些线程池底层要么是阻塞队列的长度是Integer.maxvalue,要么线程的最大数量时Integer.maxvalue。可能会造成大量的任务堆积，都不合适。<br>
+这些线程池都是使用了ThreadPoolExecutor去创建线程的，在实际工作中也要自己去使用这个类去创建线程池。<br>
+
+
+Q:那你说一说怎么使用这个ThreadPoolExecutor。（考察线程池结构和7参数）<br>
+A:好。首先呢，一般线程池主要有4部分组成。<br>
+1、线程池管理器用来创建和管理线程。<br>
+2、工作线程。<br>
+3、任务接口，用于工作线程调度运行。<br>
+4、任务队列，一般是用阻塞队列来实现，用于存放待处理的任务。<br>
+然后在创建线程池的时候要提供7个参数。<br>
+参数1：corePoolSize：线程池中的常驻核心线程数<br>
+在创建了线程池之后，当有请求任务来了之后，就会安排池中的线程去执行请求任务，近似理解为今日当值线程。<br>
+当线程池中的线程数目达到corePoolSize后，就会把到达的任务放到缓存队列中。<br>
+参数2：maximumPoolSize : 线程池所能容纳同时执行的最大线程数，必须大于等于1。<br>
+参数3：keepAliveTile：多余的空闲线程的存活时间，当线程池数量超过corePoolSize的时，当空闲时间达到该值得时候，多余空闲线程会被销。
+默认情况下，只有当线程池中的线程数大于corePoolSize的时候，keepAliveTime才会起作用，知道线程池中的线程数不大于corePoolSize 。
+毁直到只剩下corePoolSize个线程为止。
+参数4：unit ：keepAliveTime的时间单位<br>
+在规定的时间单位里面，没有新的任务了，线程没有执行，这些线程就会被销毁，直至数量降低为corePoolSize的数量。<br>
+参数5：workQueue ： 任务队列，被提交但是还没有被执行的任务。<br>
+参数6：threadFactory：表示生产线程池中工作线程的线程工厂，用于创建线程一般默认的即可。<br>
+参数7：handler： 拒绝策略，表示当队列满了并且工作线程大于等于线程池的最大线程数时，如何来拒绝。<br>
+<br><br><br>
+
+Q:那线程池处理线程的原理也说说吧。（只要把7参数记清楚了，原理就简单了）<br>
+A:<br> 
+1、在创建了线程池之后，等待提交过来的任务请求<br>
+2、当调用execute()方法添加一个请求任务时，线程池会做以下判断：<br>
+&nbsp;&nbsp;&nbsp;如果正在运行的线程数量小于corePoolSize，那么马上创建线程运行这个任务；<br>
+&nbsp;&nbsp;&nbsp;如果正运行的线程数量大于或者等于corePoolSize，那么会将这个线程放入队列；<br>
+&nbsp;&nbsp;&nbsp;如果这个时候队列满了并且正在运行的线程数量小于maximumPoolSize，那么还是要创建非核心线程立刻运行这个任务<br>
+&nbsp;&nbsp;&nbsp;如果队列满了并且正在运行的线程数量大于或者等于maximumPoolSize，那么线程池会启动饱和和拒绝策略来执行。<br>
+3、当一个线程完成任务的时候，它会从队列中取下一个任务来执行。<br>
+4、当一个线程无事可做超过一定时间(KeepAliveTime)时，线程池会判断：<br>
+如果当前运行的线程数量大于corePoolSize，那么这个线程就被停掉。<br>
+所以线程池的所有任务完成后它最终会收缩到corePoolSize的大小。<br>
+<br><br><br>
+
+Q:那JDK哪些拒绝策略？<br>
+A: 默认有4种，拒绝策略要去RejectedExecutionHandler接口<br>
+1、AbortPolicy(默认)：直接抛出RejectedException异常阻止系统正常运行。<br>
+2、CallerRunsPolicy:“调用者运行”一种调节机制，给策略既不会抛弃任务，也不会抛出异常，而是将某些任务回退带调用者，从而降低新任务的流量。<br>
+3、DiscardOldestPolicy:抛弃队列中等待最久的任务，然后把当前任务加入队列中尝试再次提交当前任务。<br>
+4、DiscardPolicy:直接丢弃任务，不予处理也不抛出异常。如果运行任务失败，这是最好的一种方案。<br>
+
+Q:在项目中怎么配置线程的数量，这个由了解吗？<br>
+A:知道一点。首先要根据业务去判断一下我们的程序是IO密集型还是CPU密集型。<br>
+如果是IO密集型，也就是CPU其实不紧张，只是大部分的并发可能都被IO操作阻塞，这时候建议配置尽可能多的线程数量。
+&nbsp;&nbsp;&nbsp; 一般参考公式有两个，一个是CPU核心数 * 2，另一个是 CPU核数  /  1-阻塞系数 阻塞系数在0.8~0.9之间。<br>
+如果是CPU密集型，也就是系统主要依赖于CPU的计算，这时候应该尽可能的少配置线程的数量，一般就是创建 CPU核心数+1 个线程的线程池。<br>
+<br><br><br>
+
+Q:线程的几种状态能说一下吗？<br>
+A:当线程对象创建的时候，线程处于新建状态。<br>
+当调用start()方法之后，线程处于就绪状态。<br>
+start方法会自己去调用run方法,如果获得了CPU，线程就处于运行状态。<br>
+当处于运行状态的线程因为某些原因放弃了cpu的使用权，线程就会进入阻塞状态。<br>
+&nbsp;&nbsp;&nbsp;如果是因为调用wait方法就是等待阻塞状态。
+&nbsp;&nbsp;&nbsp;如果是获取同步锁失败则称为同步阻塞状态。
+&nbsp;&nbsp;&nbsp;如果是调用sleep,join,JVM也会把线程置为阻塞状态。等sleep超时，join线程结束等，线程会重新转入运行状态。<br>
+线程执行完成或者爆出异常之后会进入死亡状态。<br>
+
+Q:线程终止几种方式。<br>
+A:四种。1、用一个volatile修饰的标志变量，使用CAS循环。<br>
+2、用interrupt()方法。但是还是要监控它抛出异常或者监控终端标志，也能退出线程。<br>
+3、用stop方法，但是会引起死锁问题，一般不用。<br>
+4、最后就是线程正常退出也会终止线程。<br>
+<br><br><br>
+
+
+Q:sleep和wait的区别<br>
+A：s两个方法都可以放弃CPU一段时间。不同的是sleep不会放弃锁，wait会放弃锁。<br>
+<br><br><br>
+
+Q:说说start和run的区别。<br>
+A:（上面已经说了）线程启动之后会自己去掉用run方法。如果直接调用run方法，线程对象只是创建了，根本没有启动。
+<br><br><br>
+
+Q:知道守护线程吗？<br>
+A:知道一点。一般守护线程的优先级比较低，比如说JVM的GC线程就是守护线程，这些线程为用户线程服务。当Java程序只有守护线程的时候，JVM就会关闭退出了。<br>
+<br><br><br>
+
+Q:说几个线程的基本方法。<br>
+A：<br>
+sleep方法，不会释放锁，线程进入TIMED-waiting状态。<br>
+yield方法，让出CPU的时间片，大家一起来重新竞争。<br>
+interrupt方法，只会改变一个中断的标志位，这个线程本身不会因为此而改变状态。但是可以根据这个状态去控制这个线程终止。<br>
+join方法，等待另一个线程结束，一般用于获取另一个线程的计算结果。<br>
+Object类的notify方法，唤醒在此对象监视器上等待的单个线程。如果有多个在等待，会随机唤醒一个。<br>
+Object类的notifyAll方法，唤醒所有在这个监视器上等待的所有线程。<br>
+Object类的wait方法，使线程进入Waiting状态，只有等待其他线程的通知或者被中断才会返回，会释放当前锁。一般用在同步代码块中。<br>
+<br><br><br>
+
+Q:什么是线程上下文切换？<br>
+A:从使用CPU到不使用CPU就叫一次山下文切换。就是CPU给每一个任务一定的时间，把当前的任务状态保存下来。当再切换回来的时候，再加载回来任务状态。<br>
+其实也就是程序计数器中的内容，也就当前线程是下一条需要指令的地址。<br>
+<br><br>
+
 
 ## 三、volatile
+
 
 ## 四、synchronized
 Q:谈谈对synchronized关键字的理解。<br>
@@ -78,8 +191,7 @@ JVM会在当前方法的栈帧中创建一个锁记录的空间Lock record，并
 最后还有一个锁消除和锁粗化的问题。<br>
 锁消除，指的是锁住的对象不会存在多线程竞争问题，synchronized没有必要存在。JIT即时编译器就会把锁消除。<br>
 锁粗化：JVM探测到一连串重复的操作中，都有用到monitorenter和monitorexit，就会把同步的范围扩大到这些重复操作的外面去。<br>
-<br><br><br>
-
+<br><br>
 
 Q:synchronized和Lock的区别，平时使用synchronized都应该注意什么？<br>
 A:区别主要有：<br>
@@ -98,8 +210,55 @@ synchronized是非公平锁，使用ReentrantLock可以控制是否公平。<br>
 <br><br><br>
 
 
-
-
 ## 五、AQS框架
+Q:AQS知道吗？简单说一下。<br>
+（这大概就是一道送命题吧，能回答多少看运气了，主要不是问这个AQS，想问的是整个Lock架构。生死由命，富贵在天！）<br>
+A:知道一点。<br>
+AQS叫抽象队列同步器，Doug Lea 大神写的一套多线程访问共享资源的同步器框架。对比synchronized它不是jvm层面的锁，而是JDK层面的锁规范。<br>
+许多类都是实现了这个抽象类的，ReentrantLock Semaphore CountDownLatch。<br>
+这个抽象类主要由两部分组成。一个用volatile修饰的int变量state标识，还有一个先进先出的线程等待队列（FIFO），这个队列的底层是一个双向链表。<br>
+<br>
+AQS指定了两种锁的方式，独占锁，比如ReentrantLock 和共享锁 比如Semaphore和CountDownLatch。<br>
+它只是规范了锁的结构，具体的的锁细节交给他的子类去实现，获取资源的方式，释放锁的方式等等。<br>
+举几个例子来说：<br>
+ReentrantLock：他是一种独占锁。 初始状态state是0，代表锁定状态。<br>
+lock()方法会调用tryAcquire独占锁并且state+1,其他线程tryAcquire就会失败，直到线程使用unlock方法让state被减为0,其他线程才能竞争锁资源。state在lock时候加一跟在unlock时候减一就是可重入的实现。<br>
+<br>
+CountDownLatch:它是一种共享锁。<br>
+整个任务被划分成N个子线程去执行，这几个线程是并行的，调用countDown()一次，state就会减一，这个减一过程还是用CAS操作的，等到所有线程都执行完的时候，state的值才会变成0，然后才回到主调用线程。<br>
+AQS也允许独占锁和共享锁并存，也就是tryAcquire - tryRelease这一组独占锁需要实现的方法，跟tryAcquireShared-tayReleaseShared这组共享锁需要实现的方法，
+在这种锁中也实现了。比如说读写锁就是这样的。ReentrantReadWriteLock。<br>
+<br><br><br>
+
+
+Q:刚刚你说到了ReentrantLock和CountDownLatch这两个并发工具类，你能说说别的常用的并发工具类吗？（就是要听知识掌握的宽度）<br>
+A:刚刚说的是实现思路，在用的时候一般是这几个CountDownLatch，CyclicBarrier，Semaphore。<br>
+CountDownLatch是一种倒计时锁，让某个线程阻塞，直到另外的一些线程完成之后才被唤醒。主要是await方法等待被唤醒，countDown在线程执行完任务之后把state减一。<br>
+CyclicBarrier翻译过来叫循环屏障，就是所有线程都等待，直到所有线程都准备好进入await方法之后，所有线程才开始执行。<br>
+Semaphore 可以控制同时访问线程的个数acquired一个，release释放一个。一般用在多线程争抢资源的时候。<br>
+它设计的两个目的是：一、用于多个共享资源的互斥作用，还有就是并发线程的控制数。<br>
+<br><br><br>
+
+
+Q:阻塞队列能说说吗？<br>
+A:BlockQueue,先进先出。<br>
+对列是空的时候，想消费元素，这个线程会被阻塞。<br>
+队列是满的时候，想添加元素，这个线程也会被阻塞。<br>
+一般使用offer和poll这组操作，使用add和remove会抛出异常。<br>
+Java实现的阻塞队列比较多。<br>
+1、ArrayBlockingQueue : 又数组结构组成的有界阻塞队列。new ArrayList就是new了一个初始值是10的数组。<br>
+2、LinkedBlockingQueue ： 由链表构成的有界阻塞队列（但大小默认值为Integer.MAX_VALUE 这个数字特别大21亿，基本无界） 慎用。<br>
+3、PriorityBlockingQueue : 支持优先级排序的无界阻塞队列。<br>
+4、DelayQueue ： 使用优先级队列实现的延迟无界阻塞队列。<br>
+5、SynchronousQueue : 不存储元素的阻塞队列，也即单个元素的队列。有且仅有一个。<br>
+6、LinkedTransferQueue : 由链表结构组成的无界阻塞队列。<br>
+7、LinkedBlockingDeque : 由链表结构组成的双向阻塞队列。<br>
+
+(后面再问就说不知道，加锁过程释放锁过程能问到怀疑人生。synchronized的也一样。)
+Q:
+A:
+
+
+
 
 
