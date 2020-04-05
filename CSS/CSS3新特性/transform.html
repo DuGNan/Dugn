@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform属性</title>
+    <style>
+        .box {
+            margin:200px;
+            width: 200px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        .box:hover {
+            transform:rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transition: 2s; /*为了更好的看清旋转*/
+            -moz-transition: 2s;
+            -ms-transition: 2s;
+            -o-transition: 2s;
+            -webkit-transition: 2s;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        
+    </div>
+    
+</body>
+</html>
