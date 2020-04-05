@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue的一些属性</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="hello">
+        <div v-cloak>{{ msg1 }}</div>
+        <div v-text='msg2'></div>
+        <div v-html='msg3'></div>
+        <!-- v-bind：是vue中，提供的用于绑定属性的按钮-->
+        <!-- <input type="button" value="按钮" v-bind:title="msg4">
+-->
+        <!-- 可以简写为：:要绑定的属性-->
+        <!-- v-bind中可以写变量+字符串的拼接-->
+        <input type="button" value="按钮" :title="msg4">
+    </div>
+    <script src="../assets/javascripts/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#hello',
+            data: {
+                msg1: '测试v-cloak',
+                msg2: '测试v-text',
+                msg3: '<h1>测试v-html</h1>',
+                msg4: '测试v-bind'
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue基本代码</title>
+    <script src="../assets/javascripts/vue.js"></script>
+</head>
+<body>
+    <div id="hello">
+        <p>{{ msg}}</p>
+    </div>
+    <script>
+        // 创建vue实例
+        // 导入vue.js后，在浏览器内存中，会多出一个Vue的构造函数
+        // 注意：我们new出来的这个vm对象，就是我们MVVM中的VM调度者
+        var vm = new Vue({
+            el : '#hello', //当前我们new的这个实例，要控制页面上的哪个区域
+            data : {
+                msg : 'hello vue!' //通过Vue提供的指令，很方便的就能把数据渲染到页面上
+            }
+        })
+    </script>
+</body>
+</html>
