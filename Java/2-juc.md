@@ -127,6 +127,13 @@ A:从使用CPU到不使用CPU就叫一次山下文切换。就是CPU给每一个
 
 
 ## 三、volatile
+（volatile要回答到几个点：CAS,ABA,Unsafe类,乐观锁,不保证原子性,原子类,原子包装类）
+
+Q:volatile关键字用过吗？谈谈你的认识。<br>
+A:用过。它是一种乐观锁的思想。<>
+
+
+
 
 
 ## 四、synchronized
