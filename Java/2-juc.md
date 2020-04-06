@@ -27,13 +27,13 @@ synchronized是典型的在JVM层面的悲观锁。<br>
 
   
 ## 二、线程、线程池
-(核心点：线程池7参数、线程方法、线程状态)<br>
-Q:有几种获得线程的方式？<br>
+**(核心点：线程池7参数、线程方法、线程状态)**<br>
+**Q:有几种获得线程的方式？**<br>
 A：常用的是四种。继承Thread类，实现Runnable接口，实现Callable获得一个可以带返回值的线程，还有就是使用线程池。<br>
 一般在实际开发中要使用线程池。好处就是能够控制最大并发数，线程复用，方便管理线程。<br>
 <br><br>
 
-Q:JDK自带的线程池有哪些？能说一下么？<br>
+**Q:JDK自带的线程池有哪些？能说一下么？**<br>
 A:JDK能够借助Executors创建4种线程池。<br>
 1、Executors.newFixedThreadPool(5) 创建一个固定数目的线程池。<br>
 2、Executors.newSingleThreadPool() 创建一个只有一个线程的线程池。<br>
@@ -42,13 +42,13 @@ A:JDK能够借助Executors创建4种线程池。<br>
 <br><br>
 
 
-Q:平时工作中用使用上面哪一种方式创建线程池？<br>
+**Q:平时工作中用使用上面哪一种方式创建线程池？**<br>
 A:一般都不用。这些线程池底层要么是阻塞队列的长度是Integer.maxvalue,要么线程的最大数量时Integer.maxvalue。可能会造成大量的任务堆积，都不合适。<br>
 这些线程池都是使用了ThreadPoolExecutor去创建线程的，在实际工作中也要自己去使用这个类去创建线程池。<br>
 <br><br>
 
 
-Q:那你说一说怎么使用这个ThreadPoolExecutor。（考察线程池结构和7参数）<br>
+**Q:那你说一说怎么使用这个ThreadPoolExecutor。**（考察线程池结构和7参数）<br>
 A:好。首先呢，一般线程池主要有4部分组成。<br>
 1、线程池管理器用来创建和管理线程。<br>
 2、工作线程。<br>
@@ -69,7 +69,7 @@ A:好。首先呢，一般线程池主要有4部分组成。<br>
 参数7：handler： 拒绝策略，表示当队列满了并且工作线程大于等于线程池的最大线程数时，如何来拒绝。<br>
 <br><br>
 
-Q:那线程池处理线程的原理也说说吧。（只要把7参数记清楚了，原理就简单了）<br>
+**Q:那线程池处理线程的原理也说说吧。**（只要把7参数记清楚了，原理就简单了）<br>
 A:<br> 
 1、在创建了线程池之后，等待提交过来的任务请求<br>
 2、当调用execute()方法添加一个请求任务时，线程池会做以下判断：<br>
@@ -83,7 +83,7 @@ A:<br>
 所以线程池的所有任务完成后它最终会收缩到corePoolSize的大小。<br>
 <br><br>
 
-Q:那JDK哪些拒绝策略？<br>
+**Q:那JDK哪些拒绝策略？**<br>
 A: 默认有4种，拒绝策略要去RejectedExecutionHandler接口<br>
 1、AbortPolicy(默认)：直接抛出RejectedException异常阻止系统正常运行。<br>
 2、CallerRunsPolicy:“调用者运行”一种调节机制，给策略既不会抛弃任务，也不会抛出异常，而是将某些任务回退带调用者，从而降低新任务的流量。<br>
@@ -91,14 +91,14 @@ A: 默认有4种，拒绝策略要去RejectedExecutionHandler接口<br>
 4、DiscardPolicy:直接丢弃任务，不予处理也不抛出异常。如果运行任务失败，这是最好的一种方案。<br>
 <br><br>
 
-Q:在项目中怎么配置线程的数量，这个由了解吗？<br>
+**Q:在项目中怎么配置线程的数量，这个由了解吗？**<br>
 A:知道一点。首先要根据业务去判断一下我们的程序是IO密集型还是CPU密集型。<br>
 如果是IO密集型，也就是CPU其实不紧张，只是大部分的并发可能都被IO操作阻塞，这时候建议配置尽可能多的线程数量。<br>
 &nbsp;&nbsp;&nbsp; 一般参考公式有两个，一个是CPU核心数 * 2，另一个是 CPU核数  /  1-阻塞系数 阻塞系数在0.8~0.9之间。<br>
 如果是CPU密集型，也就是系统主要依赖于CPU的计算，这时候应该尽可能的少配置线程的数量，一般就是创建 CPU核心数+1 个线程的线程池。<br>
 <br><br>
 
-Q:线程的几种状态能说一下吗？<br>
+**Q:线程的几种状态能说一下吗？**<br>
 A:当线程对象创建的时候，线程处于新建状态。<br>
 当调用start()方法之后，线程处于就绪状态。<br>
 start方法会自己去调用run方法,如果获得了CPU，线程就处于运行状态。<br>
@@ -110,7 +110,7 @@ start方法会自己去调用run方法,如果获得了CPU，线程就处于运�
 线程执行完成或者爆出异常之后会进入死亡状态。<br>
 <br><br>
 
-Q:线程终止几种方式。<br>
+**Q:线程终止几种方式。**<br>
 A:四种。<br>
 1、用一个volatile修饰的标志变量，使用CAS循环监控。<br>
 2、用interrupt()方法。但是还是要监控它抛出异常或者监控终端标志，也能退出线程。<br>
@@ -119,19 +119,19 @@ A:四种。<br>
 <br><br>
 
 
-Q:sleep和wait的区别<br>
+**Q:sleep和wait的区别**<br>
 A：s两个方法都可以放弃CPU一段时间。不同的是sleep不会放弃锁，wait会放弃锁。<br>
 <br><br>
 
-Q:说说start和run的区别。<br>
+**Q:说说start和run的区别。**<br>
 A:（上面已经说了）线程启动之后会自己去掉用run方法。如果直接调用run方法，线程对象只是创建了，根本没有启动。
 <br><br>
 
-Q:知道守护线程吗？<br>
+**Q:知道守护线程吗？**<br>
 A:知道一点。一般守护线程的优先级比较低，比如说JVM的GC线程就是守护线程，这些线程为用户线程服务。当Java程序只有守护线程的时候，JVM就会关闭退出了。<br>
 <br><br><br>
 
-Q:说几个线程的基本方法。<br>
+**Q:说几个线程的基本方法。**<br>
 A：<br>
 sleep方法，不会释放锁，线程进入TIMED-waiting状态。<br>
 yield方法，让出CPU的时间片，大家一起来重新竞争。<br>
@@ -142,22 +142,22 @@ Object类的notifyAll方法，唤醒所有在这个监视器上等待的所有�
 Object类的wait方法，使线程进入Waiting状态，只有等待其他线程的通知或者被中断才会返回，会释放当前锁。一般用在同步代码块中。<br>
 <br><br>
 
-Q:什么是线程上下文切换？<br>
+**Q:什么是线程上下文切换？**<br>
 A:从使用CPU到不使用CPU就叫一次山下文切换。就是CPU给每一个任务一定的时间，把当前的任务状态保存下来。当再切换回来的时候，再加载回来任务状态。<br>
 其实也就是程序计数器中的内容，也就当前线程是下一条需要指令的地址。<br>
 <br><br>
 
 
 ## 三、volatile
-(核心点：CAS、ABA、Unsafe类、乐观锁、不保证原子性、原子包装类、原子引用)
+**(核心点：CAS、ABA、Unsafe类、乐观锁、不保证原子性、原子包装类、原子引用)**
 
-Q:volatile关键字用过吗？谈谈你的认识。<br>
+**Q:volatile关键字用过吗？谈谈你的认识。**<br>
 A:用过。它是一种乐观锁的思想。<br>
 volatile关键字能保证可见性跟有序性，不能保证原子性，也就是在读写数据的时候会有线程安全问题。它必须配合CAS算法才能完成乐观锁加锁的这么一个过程。<br>
 volatile能禁止指令重排是因为使用的CPU内存屏障指令能一下子保证禁止重排和内存可见。
 <br><br>
 
-Q：那你说一说CAS。<br>
+**Q：那你说一说CAS。**<br>
 A：CAS是一种更新数据时候的原子操作，比较期望值和内存值是否一样，一样才会更新内存值，不一样就会取到内存最新值重新计算。<br>
 用CAS操作完成自选锁，目的是为了让线程多等待一会，等待持有锁的线程释放锁，那么自己就不需要去线程状态的切换，尽量避免自己进入阻塞或者挂起状态。<br>
 使用自旋锁的时候要注意场景是那种占用锁时间比较短，竞争不太激烈的情况下，这样才不会浪费很多的CPU资源。<br>
@@ -168,7 +168,7 @@ A：CAS是一种更新数据时候的原子操作，比较期望值和内存值�
 AtomicInteger的CAS是用到了Unsafe类结合内存地址偏移量的写法，是这个native方法是C++写的用指针保证比较并交换的成功。<br>
 <br><br>
 
-Q:ABA问题知道吗?说一说。<br>
+**Q:ABA问题知道吗?说一说。**<br>
 A:知道。ABA问题是CAS引起的。<br>
 线程A和其他多线程同时获取数据之后，其他把数据改成了另一个，然后又改回来了。<br>
 线程A不知道数据的历史版本的时候，就会把数据更新。<br>
@@ -176,14 +176,14 @@ A:知道。ABA问题是CAS引起的。<br>
 如果历史数据对最终的结果有影响，那就可以使用一个版本号来解决，线程A不光比较数值，还要比较版本号是否正确。提交数据的时候附带也要提交版本号。就能解决ABA问题。<br>
 <br><br>
 
-Q:CAS的缺点能总结一下吗？<br>
+**Q:CAS的缺点能总结一下吗？**<br>
 A:缺点有三。1是会消耗CPU,2是只能保证一个共享变量的原子性,3是会引发ABA问题。<br>
 <br><br>
 
 
 ## 四、synchronized
-(核心点较多，算是比较难的知识点了：使用、可重入、非公平、不可中断、monitor关联对象(计数器,owner)、monitorenter、monitorexit、ContentionList\EntryList\WaitSet\OnDeck\Owner、锁升级过程(head 标志位)、偏向锁、锁消除、锁粗化)<br>
-Q:谈谈对synchronized关键字的理解。<br>
+**(核心点较多，算是比较难的知识点了：使用、可重入、非公平、不可中断、monitor关联对象(计数器,owner)、monitorenter、monitorexit、ContentionList\EntryList\WaitSet\OnDeck\Owner、锁升级过程(head 标志位)、偏向锁、锁消除、锁粗化)**<br>
+**Q:谈谈对synchronized关键字的理解。**<br>
 A:<br>
 一、首先是synchronized的使用，它可以作用在方法、静态方法和代码块上。<br>
 当一个普通方法使用synchronized修饰的时候，锁住的是当前对象this。<br>
@@ -209,7 +209,7 @@ monitorexit退出的逻辑：每次退出将计数器的值减一，减到0的�
 <br><br>
 
 
-Q: synchronized的底层处理细节知道吗？<br>
+**Q: synchronized的底层处理细节知道吗？**<br>
 A: 大致知道一点。(别答的太自信，让说锁竞争、锁释放、锁等待的过程就GG)<br>
 所有请求锁资源的线程都会被放在一个先进后出的竞争队列中(ContentionList),由于这个队列会被频繁的CAS访问，为了降低这个竞争队列队尾元素的竞争，JVM会将一部分线程移动到EntryList这个队列中。<br>
 当Owner线程在释放锁资源之后，竞争队列的一部分线程就会进入到EntryList中，并且指定了一个线程作为OnDeck线程。<br>
@@ -218,7 +218,7 @@ OnDeck线程不直接把锁交给OnDeck，而是把竞争锁的权利给OnDeck�
 如果Owner线程被wait()方法阻塞，它就会被转移到WaitSet的阻塞队列中，直到它被唤醒之后，会重新把它放到EntryList中。<br>
 <br><br>
 
-Q:知道synchronized升级的过程吗？简单说一下。<br>
+**Q:知道synchronized升级的过程吗？简单说一下。**<br>
 A:知道一点。<br>
 synchronized会有一个： 不加锁 -> 偏向锁 -> 轻量级锁 -> 重量级锁  的过程。<br>
 要先说一个对象头的概念。<br>
@@ -245,7 +245,7 @@ JVM会在当前方法的栈帧中创建一个锁记录的空间Lock record，并
 锁粗化：JVM探测到一连串重复的操作中，都有用到monitorenter和monitorexit，就会把同步的范围扩大到这些重复操作的外面去。<br>
 <br><br>
 
-Q:synchronized和Lock的区别，平时使用synchronized都应该注意什么？<br>
+**Q:synchronized和Lock的区别，平时使用synchronized都应该注意什么？**<br>
 A:区别主要有：<br>
 Synchronized是关键字，JVM直接支持。Lock是一个接口。一个是JVM层面的，一个是JDK层面的。<br>
 synchronized会自动释放锁，即时抛出异常也会释放，而Lock必须手动释放锁。<br>
@@ -262,10 +262,10 @@ synchronized是非公平锁，使用ReentrantLock可以控制是否公平。<br>
 
 
 ## 五、AQS框架
-(核心点：独占锁、共享锁、state标志、双向链表构成的一个等待队列 FIFO 、AQS实现类、阻塞队列)<br>
+**(核心点：独占锁、共享锁、state标志、双向链表构成的一个等待队列 FIFO 、AQS实现类、阻塞队列)**<br>
 (这大概就是一道送命题吧，能回答多少看运气了，主要不是问这个AQS，想问的是整个Lock架构。生死由命，富贵在天！)<br>
 <br>
-Q:AQS知道吗？简单说一下。<br>
+**Q:AQS知道吗？简单说一下。**<br>
 A:知道一点。<br>
 AQS叫抽象队列同步器，Doug Lea 大神写的一套多线程访问共享资源的同步器框架。对比synchronized它不是jvm层面的锁，而是JDK层面的锁规范。<br>
 许多类都是实现了这个抽象类的，ReentrantLock Semaphore CountDownLatch。<br>
@@ -284,7 +284,7 @@ AQS也允许独占锁和共享锁并存，也就是tryAcquire - tryRelease这一
 <br><br>
 
 
-Q:刚刚你说到了ReentrantLock和CountDownLatch这两个并发工具类，你能说说别的常用的并发工具类吗？（就是要听知识掌握的宽度）<br>
+**Q:刚刚你说到了ReentrantLock和CountDownLatch这两个并发工具类，你能说说别的常用的并发工具类吗？**（就是要听知识掌握的宽度）<br>
 A:刚刚说的是实现思路，在用的时候一般是这几个CountDownLatch，CyclicBarrier，Semaphore。<br>
 CountDownLatch是一种倒计时锁，让某个线程阻塞，直到另外的一些线程完成之后才被唤醒。主要是await方法等待被唤醒，countDown在线程执行完任务之后把state减一。<br>
 CyclicBarrier翻译过来叫循环屏障，就是所有线程都等待，直到所有线程都准备好进入await方法之后，所有线程才开始执行。<br>
@@ -293,7 +293,7 @@ Semaphore 可以控制同时访问线程的个数acquired一个，release释放�
 <br><br>
 
 
-Q:阻塞队列能说说吗？<br>
+**Q:阻塞队列能说说吗？**<br>
 A:BlockQueue,先进先出。<br>
 对列是空的时候，想消费元素，这个线程会被阻塞。<br>
 队列是满的时候，想添加元素，这个线程也会被阻塞。<br>
