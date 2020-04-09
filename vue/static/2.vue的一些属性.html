@@ -20,7 +20,7 @@
 -->
         <!-- 可以简写为：:要绑定的属性-->
         <!-- v-bind中可以写变量+字符串的拼接-->
-        <input type="button" value="按钮" :title="msg4">
+        <input type="button" value="按钮" :title="msg4" v-on:click="show">
     </div>
     <script src="../assets/javascripts/vue.js"></script>
     <script>
@@ -31,6 +31,11 @@
                 msg2: '测试v-text',
                 msg3: '<h1>测试v-html</h1>',
                 msg4: '测试v-bind'
+            },
+            methods: {
+                show: function () {
+                    alert('hello')
+                }
             }
         })
     </script>
