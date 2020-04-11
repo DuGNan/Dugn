@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7fb7ff8-648c-4274-a768-1f46fc1ead51" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Animal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Boss.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Dog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Person.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/model/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/reflect/ClassDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/reflect/CloneDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/reflect/CreateObjectDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Java/src/main/java/reflect/Demo1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/file/1-java.md" beforeDir="false" afterPath="$PROJECT_DIR$/Java/file/1-java.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -40,7 +52,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -49,7 +61,7 @@
       <recent name="D:\study\projects\Dugn\Java\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ExecutorDemo">
+  <component name="RunManager" selected="Application.CloneDemo">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -57,36 +69,64 @@
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <module />
     </configuration>
+    <configuration name="ClassDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="reflect.ClassDemo" />
+      <module name="Java" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reflect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CloneDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="reflect.CloneDemo" />
+      <module name="Java" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reflect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CreateObjectDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="reflect.CreateObjectDemo" />
+      <module name="Java" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reflect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Demo1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="reflect.Demo1" />
+      <module name="Java" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="reflect.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ExecutorDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Thread.ExecutorDemo" />
-      <module name="Java" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Thread.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RunnableDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Thread.RunnableDemo" />
-      <module name="Java" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Thread.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ThreadDemo1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Thread.ThreadDemo1" />
       <module name="Java" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -131,15 +171,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ThreadDemo1" />
-      <item itemvalue="Application.RunnableDemo" />
       <item itemvalue="Application.ExecutorDemo" />
+      <item itemvalue="Application.Demo1" />
+      <item itemvalue="Application.ClassDemo" />
+      <item itemvalue="Application.CreateObjectDemo" />
+      <item itemvalue="Application.CloneDemo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CloneDemo" />
+        <item itemvalue="Application.CreateObjectDemo" />
+        <item itemvalue="Application.ClassDemo" />
+        <item itemvalue="Application.Demo1" />
         <item itemvalue="Application.ExecutorDemo" />
-        <item itemvalue="Application.RunnableDemo" />
-        <item itemvalue="Application.ThreadDemo1" />
       </list>
     </recent_temporary>
   </component>
@@ -172,6 +216,7 @@
       <workItem from="1586391870608" duration="641000" />
       <workItem from="1586514177004" duration="96000" />
       <workItem from="1586514294579" duration="247000" />
+      <workItem from="1586582456790" duration="8701000" />
     </task>
     <servers />
   </component>
@@ -179,9 +224,57 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="483" y="142" key="SettingsEditor" timestamp="1586514542283">
+    <state x="508" y="169" key="#Project_Structure" timestamp="1586582859089">
       <screen x="0" y="24" width="1920" height="993" />
     </state>
-    <state x="483" y="142" key="SettingsEditor/0.24.1920.993@0.24.1920.993" timestamp="1586514542283" />
+    <state x="508" y="169" key="#Project_Structure/0.24.1920.993@0.24.1920.993" timestamp="1586582859089" />
+    <state x="761" y="193" key="#com.intellij.ide.util.MemberChooser" timestamp="1586590213518">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="761" y="193" key="#com.intellij.ide.util.MemberChooser/0.24.1920.993@0.24.1920.993" timestamp="1586590213518" />
+    <state x="788" y="400" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1586582931588">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="788" y="400" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.24.1920.993@0.24.1920.993" timestamp="1586582931588" />
+    <state x="493" y="94" key="CommitChangelistDialog2" timestamp="1586592568222">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="493" y="94" key="CommitChangelistDialog2/0.24.1920.993@0.24.1920.993" timestamp="1586592568222" />
+    <state width="1868" height="226" key="GridCell.Tab.0.bottom" timestamp="1586592553723">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state width="1868" height="226" key="GridCell.Tab.0.bottom/0.24.1920.993@0.24.1920.993" timestamp="1586592553723" />
+    <state width="1868" height="226" key="GridCell.Tab.0.center" timestamp="1586592553721">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state width="1868" height="226" key="GridCell.Tab.0.center/0.24.1920.993@0.24.1920.993" timestamp="1586592553721" />
+    <state width="1868" height="226" key="GridCell.Tab.0.left" timestamp="1586592553721">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state width="1868" height="226" key="GridCell.Tab.0.left/0.24.1920.993@0.24.1920.993" timestamp="1586592553721" />
+    <state width="1868" height="226" key="GridCell.Tab.0.right" timestamp="1586592553722">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state width="1868" height="226" key="GridCell.Tab.0.right/0.24.1920.993@0.24.1920.993" timestamp="1586592553722" />
+    <state x="498" y="166" key="Maven.ArtifactSearchDialog" timestamp="1586590851381">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="498" y="166" key="Maven.ArtifactSearchDialog/0.24.1920.993@0.24.1920.993" timestamp="1586590851381" />
+    <state x="483" y="142" key="SettingsEditor" timestamp="1586584058608">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="483" y="142" key="SettingsEditor/0.24.1920.993@0.24.1920.993" timestamp="1586584058608" />
+    <state x="401" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1586589930759">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="401" y="92" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.24.1920.993@0.24.1920.993" timestamp="1586589930759" />
+    <state x="702" y="188" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1586586875511">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="702" y="188" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.24.1920.993@0.24.1920.993" timestamp="1586586875511" />
+    <state x="567" y="58" width="785" height="897" key="find.popup" timestamp="1586583664491">
+      <screen x="0" y="24" width="1920" height="993" />
+    </state>
+    <state x="567" y="58" width="785" height="897" key="find.popup/0.24.1920.993@0.24.1920.993" timestamp="1586583664491" />
   </component>
 </project>

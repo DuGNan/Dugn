@@ -210,7 +210,24 @@ A
   
 
 
-## 二、
+## 二、反射
+**Q:Class类中getMethods和getDeclaredMethods,getFields和getDeclaredFields的区别**
+
+A:
+- getFields方法:返回一个Field类型数组，其中包含当前类的public字段，如果此类继承于某个父类，同事包括父类的public字段。其它的proteced和private字段，无论是属于当前类还是父类都不被此方法获取。
+  
+- getDeclareFields方法:返回一个Field类型数组，结果包含当前类的所有字段，private、protected、public或者无修饰符都在内。另外，此方法返回的结果不包括父类的任何字段。 此方法只是针对当前类的。
+  
+- getMethods()返回某个类的所有公用（public）方法包括其继承类的公用方法，当然也包括它所实现接口的方法。
+
+- getDeclaredMethods()对象表示的类或接口声明的所有方法,包括公共、保护、默认（包）访问和私有方法，但不包括继承的方法。当然也包括它所实现接口的方法。
+
+**Q:创建对象有哪些方法**
+A:
+1. 使用new
+2. 利用反射,
+- 使用Class的newInstance(),种方式要求该Class对象的对应类有默认的构造器，而执行newInstance()方法时实际上是利用默认构造器来创建该类的实例
+- 先使用Class对象获取指定的Constructor对象，再调用Construtor对象的newInstance()方法来创建该Class对象对应类的实例。通过这种方式可以选择使用某个类的指定构造器来创建实例
 
 ## 三、
 
